@@ -9,10 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'hero': 'linear-gradient(to right, rgba(47, 45, 65, 0.7), rgba(47, 45, 65, 0.7)), url("//cdn.otstatic.com/cfe/14/images/us-1040px-e7df7b.webp")',
       },
+      gridTemplateColumns: {
+        'auto': 'repeat(auto-fill, minmax(236px, 1fr))'
+      },
+      colors: {
+        'placeholder': '#9CA3AF'
+      }
     },
   },
   plugins: [],

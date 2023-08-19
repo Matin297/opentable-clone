@@ -1,113 +1,411 @@
-import Image from 'next/image'
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <>
+      <header>
+        <nav className="flex gap-2 px-4 py-3">
+          <Link href="/" className="mr-auto">
+            <img
+              className="h-9 w-auto"
+              src="https://cdn.otstatic.com/cfe/14/images/opentable-logo-153e80.svg"
+              alt="logo"
             />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          </Link>
+          <button className="px-4 text-white text-xs bg-cyan-700 rounded">
+            Sign in
+          </button>
+          <button className="px-4 text-xs border border-cyan-700 rounded">
+            Sign up
+          </button>
+        </nav>
+      </header>
+      <main>
+        <header className="min-h-[26rem] p-2 bg-hero bg-no-repeat bg-cover bg-[50%] text-white flex justify-center items-center">
+          <form>
+            <h1 className="text-5xl mb-4 font-bold">Make a free reservation</h1>
+            <div className="flex flex-wrap gap-4">
+              <input
+                type="search"
+                className="grow p-3 rounded text-black"
+                placeholder="Location, Restaurant, or Cuisine"
+              />
+              <button className="transition-[background-color] duration-300 ease-in-out bg-rose-600 hover:bg-rose-700 py-3 px-12 rounded">
+                Let’s go
+              </button>
+            </div>
+          </form>
+        </header>
+        <section className="my-12 px-8">
+          <ul className="grid grid-cols-auto gap-4">
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+            <li className="rounded-lg overflow-hidden border border-zinc-300">
+              <Link href="/">
+                <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
+                <div className="p-2">
+                  <h3 className="text-lg mb-1 font-bold">Title</h3>
+                  <div className="mb-1">
+                    ⭐⭐⭐⭐⭐
+                    <span className="ml-1 text-xs font-medium">
+                      100 reviews
+                    </span>
+                  </div>
+                  <div className="text-sm mb-2">
+                    <span>Mexican</span>
+                    <span className="ml-1">$$$$</span>
+                    <span className="ml-1">Toronto</span>
+                  </div>
+                  <div className="font-bold text-sm">Booked 29 times today</div>
+                </div>
+              </Link>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer className="px-8 py-12 text-white text-sm bg-gray-800">
+        <section className="flex flex-wrap gap-1 max-w-5xl mx-auto">
+          <section className="grow">
+            <h4 className="mb-2 font-bold uppercase">Discover</h4>
+            <ul className="text-neutral-300 font-light">
+              <li className="mb-2">
+                <Link href="/">Dining rewards</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Private Dining</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Reserve for Others</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Restaurants Near Me</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Delivery Near Me</Link>
+              </li>
+            </ul>
+          </section>
+          <section className="grow">
+            <h4 className="mb-2 font-bold uppercase">OpenTable</h4>
+            <ul className="text-neutral-300 font-light">
+              <li className="mb-2">
+                <Link href="/">About Us</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Blog</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Careers</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">Press</Link>
+              </li>
+            </ul>
+          </section>
+          <section className="grow">
+            <h4 className="mb-2 font-bold uppercase">Our Sites</h4>
+            <ul className="text-neutral-300 font-light">
+              <li className="mb-2">
+                <Link href="/">OpenTable.jp</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.de</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.es</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.ca</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.hk</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.ie</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.sg</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.nl</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.com.mx</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.co.uk</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.com.au</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.ae</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.co.th</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.it</Link>
+              </li>
+              <li className="mb-2">
+                <Link href="/">OpenTable.com.tw</Link>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <section className="grow">
+              <h4 className="mb-2 font-bold uppercase">Businesses</h4>
+              <ul className="text-neutral-300 font-light">
+                <li className="mb-2">
+                  <Link href="/">Restaurant reservation</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">Software</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">Industry insights</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">Hospitality resources</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">Marketing resources</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">Operation resources</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">How to open a restaurant</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">For restaurants</Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/">For restaurant groups</Link>
+                </li>
+              </ul>
+            </section>
+          </section>
+        </section>
+      </footer>
+    </>
+  );
 }
