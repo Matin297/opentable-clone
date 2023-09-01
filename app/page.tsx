@@ -1,228 +1,35 @@
-import Link from "next/link";
-import Hero from "./components/Hero";
+import RestaurantCard from "./components/RestaurantCard";
 
-export default function Home() {
+import { prisma } from "@/utils/prisma";
+import SearchRestaurantForm from "./components/SearchRestaurantForm";
+
+const getRestaurants = async () => {
+  const restaurants = await prisma.restaurant.findMany({
+    select: {
+      id: true,
+      price: true,
+      slug: true,
+      name: true,
+      images: true,
+      cuisine: true,
+      location: true,
+    },
+  });
+  return restaurants;
+};
+
+export default async function Home() {
+  const result = await getRestaurants();
   return (
     <main>
-      <Hero />
+      <header className="min-h-[26rem] p-2 bg-hero bg-no-repeat bg-cover bg-[50%] text-white flex justify-center items-center">
+        <SearchRestaurantForm title="Make a free reservation" />
+      </header>
       <section className="my-12 px-8">
         <ul className="grid grid-cols-auto gap-4">
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/a">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/b">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/c">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/d">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/e">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/f">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/g">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/h">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/i">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/j">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/6/42547915.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/k">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/3/47581663.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
-          <li className="rounded-lg overflow-hidden border border-zinc-300">
-            <Link href="/restaurant/l">
-              <div className="h-[132px] bg-[url('https://resizer.otstatic.com/v2/photos/wide-medium/2/42423216.webp')] bg-no-repeat bg-cover"></div>
-              <div className="p-2">
-                <h3 className="text-lg mb-1 font-bold">Title</h3>
-                <div className="mb-1">
-                  ⭐⭐⭐⭐⭐
-                  <span className="ml-1 text-xs font-medium">100 reviews</span>
-                </div>
-                <div className="text-sm mb-2">
-                  <span>Mexican</span>
-                  <span className="ml-1">$$$$</span>
-                  <span className="ml-1">Toronto</span>
-                </div>
-                <div className="font-bold text-sm">Booked 29 times today</div>
-              </div>
-            </Link>
-          </li>
+          {result.map(({ id, ...restaurant }) => (
+            <RestaurantCard key={id} {...restaurant} />
+          ))}
         </ul>
       </section>
     </main>

@@ -1,15 +1,38 @@
 import Link from "next/link";
+import Photos from "../components/photos";
+import { prisma } from "@/utils/prisma";
 
-export default function RestaurantDetails() {
+const getRestaurant = async (slug: string) => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      description: true,
+      images: true,
+      name: true,
+      items: true,
+    },
+  });
+  if (!restaurant) throw new Error("No Such Restaurant!");
+  return restaurant;
+};
+
+export default async function RestaurantDetails({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const {
+    images,
+    description,
+    name,
+    items: menuItems,
+  } = await getRestaurant(params.slug);
+
   return (
     <main>
-      <header className="grid h-[460px] grid-cols-4 grid-rows-2 gap-1 bg-zinc-700 px-1">
-        <div className="col-span-2 row-span-2 bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/23712963.webp')] bg-center bg-cover"></div>
-        <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715134.webp')] bg-center bg-cover"></div>
-        <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715133.webp')] bg-center bg-cover"></div>
-        <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715132.webp')] bg-center bg-cover"></div>
-        <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715131.webp')] bg-center bg-cover"></div>
-      </header>
+      <Photos images={images} className="h-[460px]" as="header" />
       <main className="flex items-start gap-6 max-w-5xl mx-auto mt-[-60px]">
         <section className="max-w-[70%] shadow-xl bg-white rounded-md p-5 flex flex-col gap-8">
           <nav className="flex gap-5 border-b font-medium">
@@ -18,6 +41,9 @@ export default function RestaurantDetails() {
               href="#overview"
             >
               Overview
+            </Link>
+            <Link className="pb-4" href="#menu">
+              Menu
             </Link>
             <Link className="pb-4" href="#photos">
               Photos
@@ -28,32 +54,33 @@ export default function RestaurantDetails() {
           </nav>
           <article id="overview">
             <h1 className="pb-8 mb-4 border-b text-5xl font-semibold">
-              Ruth's Chris Steak House - Marina Bay
+              {name}
             </h1>
             <div className="text-sm flex gap-4 font-medium mb-8">
               ⭐⭐⭐⭐⭐ <span>3.9</span> <span>90 Reviews</span>
             </div>
-            <p>
-              The best USDA Prime steak is at Ruth’s Chris Steak House in
-              Singapore. With our special 500° sizzle and award-winning wine
-              list, we make any occasion an extra-special one. Whether you’re
-              joining us for a business dinner, a private party or just a drink
-              at the bar, our Singapore steakhouse team looks forward to
-              delivering superior service and a dining experience to remember.
-            </p>
+            <p>{description}</p>
             <Link className="text-rose-600" href="/">
               Read more
             </Link>
           </article>
+          <article id="menu">
+            <h2 className="text-2xl font-bold pb-4 mb-4 border-b">Menu</h2>
+            <ul className="grid grid-cols-2 gap-3 text-sm">
+              {menuItems.map(({ id, description, name, price }) => (
+                <li key={id} className="border p-2 rounded">
+                  <h3 className="font-bold mb-2">{name}</h3>
+                  <p>{description}</p>
+                  <div className="font-bold mt-3">{price}</div>
+                </li>
+              ))}
+            </ul>
+          </article>
           <article id="photos">
-            <h2 className="text-2xl font-bold pb-4 mb-4 border-b">29 Photos</h2>
-            <section className="grid h-[320px] grid-cols-4 grid-rows-2 gap-1 bg-zinc-700 px-1">
-              <div className="col-span-2 row-span-2 bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/23712963.webp')] bg-center bg-cover"></div>
-              <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715134.webp')] bg-center bg-cover"></div>
-              <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715133.webp')] bg-center bg-cover"></div>
-              <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715132.webp')] bg-center bg-cover"></div>
-              <div className="bg-[url('https://resizer.otstatic.com/v2/photos/xlarge/1/24715131.webp')] bg-center bg-cover"></div>
-            </section>
+            <h2 className="text-2xl font-bold pb-4 mb-4 border-b">
+              {images.length} Photos
+            </h2>
+            <Photos images={images} className="h-[320px]" as="section" />
           </article>
           <article id="reviews">
             <h2 className="text-2xl font-bold pb-4 border-b">
