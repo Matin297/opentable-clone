@@ -27,6 +27,7 @@ const getRestaurantsBySearchParams = async (searchParams: SearchParamsType) => {
       name: true,
       id: true,
       images: true,
+      reviews: true,
     },
   });
   return restaurants;
@@ -51,7 +52,10 @@ export default async function Search({
             <ul className="divide-y divide-zinc-300">
               {result.map(({ id, ...restaurant }) => (
                 <li key={id} className="flex gap-4 pt-4 mb-4 text-sm">
-                  <Link href="/" className="mb-1">
+                  <Link
+                    href={`/restaurant/${restaurant.slug}#photos`}
+                    className="mb-1"
+                  >
                     <img
                       className="rounded-md max-w-[100px]"
                       src={restaurant.images[0]}
@@ -60,13 +64,19 @@ export default async function Search({
                   </Link>
                   <div className="grow">
                     <Link
-                      href={`/restaurant/${restaurant.slug}`}
+                      href={`/restaurant/${restaurant.slug}#overview`}
                       className="text-cyan-600 font-semibold text-lg underline"
                     >
                       <h2>{restaurant.name}</h2>
                     </Link>
                     <div className="my-1">
-                      ⭐⭐⭐⭐⭐ <Link href="/">(0)</Link>
+                      ⭐⭐⭐⭐⭐{" "}
+                      <Link
+                        href={`/restaurant/${restaurant.slug}#reviews`}
+                        className="hover:underline underline-offset-2"
+                      >
+                        ({restaurant.reviews.length})
+                      </Link>
                     </div>
                     <div className="mb-4">
                       <Price price={restaurant.price} /> •{" "}

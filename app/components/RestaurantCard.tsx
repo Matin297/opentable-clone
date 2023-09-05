@@ -1,6 +1,10 @@
 import Link from "next/link";
-import { Cuisine, Location, PRICE } from "@/utils/prisma";
+
+import { Cuisine, Location, PRICE, Review } from "@/utils/prisma";
+import { calcAverageRating } from "@/utils/rating";
+
 import Price from "./Price";
+import Rating from "./Rating";
 
 interface RestaurantCardProps {
   price: PRICE;
@@ -9,6 +13,7 @@ interface RestaurantCardProps {
   images: string[];
   cuisine: Cuisine;
   location: Location;
+  reviews: Review[];
 }
 
 export default function RestaurantCard({
@@ -18,6 +23,7 @@ export default function RestaurantCard({
   images,
   cuisine,
   location,
+  reviews,
 }: RestaurantCardProps) {
   return (
     <li className="rounded-lg overflow-hidden border border-zinc-300">
@@ -30,8 +36,10 @@ export default function RestaurantCard({
         <div className="p-2">
           <h3 className="text-lg mb-1 font-bold">{name}</h3>
           <div className="mb-1">
-            ⭐⭐⭐⭐⭐
-            <span className="ml-1 text-xs font-medium">100 reviews</span>
+            <Rating value={calcAverageRating(reviews)} />
+            <span className="ml-1 text-xs font-medium">
+              {reviews.length} review(s)
+            </span>
           </div>
           <div className="text-sm mb-2">
             <span className="capitalize">{cuisine.name}</span>

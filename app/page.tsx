@@ -13,6 +13,7 @@ const getRestaurants = async () => {
       images: true,
       cuisine: true,
       location: true,
+      reviews: true,
     },
   });
   return restaurants;
