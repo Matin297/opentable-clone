@@ -1,6 +1,6 @@
-import RestaurantCard from "./components/RestaurantCard";
-
 import { prisma } from "@/utils/prisma";
+
+import RestaurantCard from "./components/RestaurantCard";
 import SearchRestaurantForm from "./components/SearchRestaurantForm";
 
 const getRestaurants = async () => {

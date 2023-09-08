@@ -1,14 +1,13 @@
 import Link from "next/link";
 
-import { generateStars, calcAverageRating } from "@/utils/rating";
+import { calcAverageRating } from "@/utils/rating";
 import { prisma } from "@/utils/prisma";
-
 import { SECTION_IDs } from "../utils";
 
+import Rating from "@/components/Rating";
 import Photos from "../components/photos";
 import NavBar from "../components/NavBar";
 import SideMenu from "../components/SideMenu";
-import Rating from "@/app/components/Rating";
 
 const getRestaurant = async (slug: string) => {
   const restaurant = await prisma.restaurant.findUnique({
@@ -53,14 +52,17 @@ export default async function RestaurantDetails({
     <main>
       <Photos images={images} className="h-[460px]" as="header" />
       <main className="flex items-start gap-6 max-w-5xl mx-auto mt-[-60px]">
-        <section className="max-w-[70%] shadow-xl bg-white rounded-md px-5 flex flex-col gap-8">
+        <section className="w-full max-w-[70%] shadow-xl bg-white rounded-md px-5 pb-4 flex flex-col gap-8">
           <NavBar className="flex gap-5 border-b font-medium sticky top-0 bg-white" />
           <article id={SECTION_IDs.OVERVIEW}>
             <h1 className="pb-8 mb-4 border-b text-5xl font-semibold">
               {name}
             </h1>
             <div className="text-sm flex gap-4 font-medium mb-8">
-              <Rating value={rating} /> <span>{rating}</span>{" "}
+              <div>
+                <Rating value={rating} />
+                <span className=" ml-1">{rating}</span>
+              </div>
               <span>{reviews.length} review(s)</span>
             </div>
             <p>{description}</p>
@@ -86,33 +88,35 @@ export default async function RestaurantDetails({
             </h2>
             <Photos images={images} className="h-[320px]" as="section" />
           </article>
-          <article id={SECTION_IDs.REVIEWS}>
-            <h2 className="text-2xl font-bold pb-4 border-b">
-              What {reviews.length} people are saying
-            </h2>
-            <ul className="divide-y">
-              {reviews.map((review) => (
-                <li key={review.id} className="text-sm flex gap-4 py-4">
-                  <section className="text-center w-full max-w-[80px]">
-                    <div className="bg-violet-500 mx-auto text-white w-[48px] h-[48px] leading-[48px] mb-2 rounded-full">
-                      {review.user.first_name[0]}
-                      {review.user.last_name[0]}
-                    </div>
-                    <span className="font-medium break-words">
-                      {review.user.first_name} {review.user.last_name}
-                    </span>
-                  </section>
-                  <section>
-                    ⭐⭐⭐⭐⭐
-                    <p className="mt-4">{review.text}</p>
-                    <Link className="text-rose-600" href="/">
-                      Read more
-                    </Link>
-                  </section>
-                </li>
-              ))}
-            </ul>
-          </article>
+          {reviews.length > 0 && (
+            <article id={SECTION_IDs.REVIEWS}>
+              <h2 className="text-2xl font-bold pb-4 border-b">
+                What {reviews.length} people are saying
+              </h2>
+              <ul className="divide-y">
+                {reviews.map((review) => (
+                  <li key={review.id} className="text-sm flex gap-4 py-4">
+                    <section className="text-center w-full max-w-[80px]">
+                      <div className="bg-violet-500 mx-auto text-white w-[48px] h-[48px] leading-[48px] mb-2 rounded-full">
+                        {review.user.first_name[0]}
+                        {review.user.last_name[0]}
+                      </div>
+                      <span className="font-medium break-words">
+                        {review.user.first_name} {review.user.last_name}
+                      </span>
+                    </section>
+                    <section>
+                      <Rating value={review.rating} />
+                      <p className="mt-4">{review.text}</p>
+                      <Link className="text-rose-600" href="/">
+                        Read more
+                      </Link>
+                    </section>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          )}
         </section>
         <SideMenu />
       </main>

@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import SignUp from "./SignUp";
+
 export default function Navbar() {
   return (
     <header>
@@ -11,11 +13,9 @@ export default function Navbar() {
             alt="logo"
           />
         </Link>
-        <button className="px-4 text-white text-xs bg-cyan-700 rounded">
-          Sign in
-        </button>
+        <SignUp />
         <button className="px-4 text-xs border border-cyan-700 rounded">
-          Sign up
+          Sign In
         </button>
       </nav>
     </header>

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Cuisine, Location, PRICE, Review } from "@/utils/prisma";
 import { calcAverageRating } from "@/utils/rating";
 
-import Price from "./Price";
-import Rating from "./Rating";
+import Price from "../../components/Price";
+import Rating from "../../components/Rating";
 
 interface RestaurantCardProps {
   price: PRICE;

@@ -1,9 +1,12 @@
 import Link from "next/link";
+
+import { calcAverageRating } from "@/utils/rating";
+import { prisma, PRICE } from "@/utils/prisma";
+
+import Rating from "@/components/Rating";
+import Price from "@/components/Price";
 import SearchRestaurantForm from "../components/SearchRestaurantForm";
 import SideBar from "./components/SideBar";
-
-import { prisma, PRICE } from "@/utils/prisma";
-import Price from "../components/Price";
 
 type SearchParamsType = { location: string; cuisine: string; price: PRICE };
 
@@ -70,7 +73,7 @@ export default async function Search({
                       <h2>{restaurant.name}</h2>
                     </Link>
                     <div className="my-1">
-                      ⭐⭐⭐⭐⭐{" "}
+                      <Rating value={calcAverageRating(restaurant.reviews)} />{" "}
                       <Link
                         href={`/restaurant/${restaurant.slug}#reviews`}
                         className="hover:underline underline-offset-2"
