@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import validator from "validator";
+import bcrypt from "bcrypt";
+import * as jose from "jose";
+
+import { prisma } from "@/utils/prisma";
 
 type Body = {
   password: string;
@@ -55,5 +59,37 @@ export async function POST(request: Request) {
     return NextResponse.json({ errors }, { status: 400 });
   }
 
-  return NextResponse.json({ token: `${email}/${password}` });
+  let user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (user) {
+    return NextResponse.json(
+      { message: "Email already exists!" },
+      { status: 400 }
+    );
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const token = await new jose.SignJWT({ email })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("24h")
+    .sign(secret);
+
+  user = await prisma.user.create({
+    data: {
+      city,
+      email,
+      first_name,
+      last_name,
+      phone,
+      password: hashedPassword,
+    },
+  });
+
+  return NextResponse.json({ user, token });
 }
