@@ -5,13 +5,13 @@ import * as jose from "jose";
 
 import { prisma } from "@/utils/prisma";
 
-type Body = {
-  password: string;
-  email: string;
-  phone: string;
-  city: string;
-  first_name: string;
-  last_name: string;
+type SignupError = {
+  password?: string;
+  email?: string;
+  phone?: string;
+  city?: string;
+  first_name?: string;
+  last_name?: string;
 };
 
 const LENGTH_CONFIG = {
@@ -20,15 +20,16 @@ const LENGTH_CONFIG = {
 };
 
 export async function POST(request: Request) {
-  const {
-    email = "",
-    password = "",
-    phone = "",
-    city = "",
-    first_name = "",
-    last_name = "",
-  }: Body = await request.json();
-  const errors: Partial<Body> = {};
+  const formData: FormData = await request.formData();
+
+  const email = formData.get("email")?.toString() || "";
+  const password = formData.get("password")?.toString() || "";
+  const phone = formData.get("phone")?.toString() || "";
+  const city = formData.get("city")?.toString() || "";
+  const first_name = formData.get("first_name")?.toString() || "";
+  const last_name = formData.get("last_name")?.toString() || "";
+
+  const errors: SignupError = {};
 
   if (!validator.isEmail(email)) {
     errors.email = "Email is invalid!";
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
 
   if (!validator.isStrongPassword(password)) {
     errors.password =
-      "Password should have minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1";
+      "Password should have minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1.";
   }
 
   if (!validator.isMobilePhone(phone)) {
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
   }
 
   if (Object.keys(errors).length > 0) {
-    return NextResponse.json({ errors }, { status: 400 });
+    return NextResponse.json(errors, { status: 400 });
   }
 
   let user = await prisma.user.findUnique({
