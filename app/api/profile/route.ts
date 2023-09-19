@@ -14,14 +14,6 @@ export async function GET() {
     where: {
       email: payload.email as string,
     },
-    select: {
-      id: true,
-      first_name: true,
-      last_name: true,
-      city: true,
-      email: true,
-      phone: true,
-    },
   });
 
   return NextResponse.json(user);

@@ -1,13 +1,9 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { User } from "@/utils/prisma";
 
-const REQUEST_STATUS = {
-  idle: "idle",
-  loading: "loading",
-  success: "success",
-  fail: "fail",
-} as const;
+import { User } from "@/utils/prisma";
+import { useAuthContext } from "@/contexts/auth";
+import { REQUEST_STATUS, StatusType } from "@/utils/constants";
 
 type Error = {
   message?: string;
@@ -20,17 +16,17 @@ type Error = {
 };
 
 type SignupState = {
-  status: keyof typeof REQUEST_STATUS;
-  data: User | null;
+  status: StatusType;
   error: Error | null;
 };
 
 function useSignup() {
   const [state, setState] = useState<SignupState>({
     status: REQUEST_STATUS.idle,
-    data: null,
     error: null,
   });
+
+  const [, setAuth] = useAuthContext();
 
   function signup(formData: FormData) {
     setState((prev) => ({
@@ -42,9 +38,9 @@ function useSignup() {
       (response: AxiosResponse<User>) => {
         setState((prev) => ({
           ...prev,
-          data: response.data,
           status: REQUEST_STATUS.success,
         }));
+        setAuth(response.data);
       },
       (error: AxiosError<Error>) => {
         setState((prev) => ({

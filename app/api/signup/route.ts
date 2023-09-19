@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
 
 import { prisma } from "@/utils/prisma";
+import { AUTH_COOKIE } from "@/utils/constants";
 
 type SignupError = {
   password?: string;
@@ -92,5 +94,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({ user, token });
+  cookies().set(AUTH_COOKIE, token, { maxAge: 6 * 24 * 60 * 60 });
+
+  return NextResponse.json(user);
 }
