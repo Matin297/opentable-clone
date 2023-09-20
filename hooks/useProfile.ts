@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getCookie } from "cookies-next";
+import { getCookie, deleteCookie } from "cookies-next";
 
 import { User } from "@/utils/prisma";
 import { REQUEST_STATUS, StatusType, AUTH_COOKIE } from "@/utils/constants";
@@ -41,6 +41,7 @@ function useProfile() {
           return response.data;
         },
         (error: AxiosError<Error>) => {
+          deleteCookie(AUTH_COOKIE);
           setState((prev) => ({
             ...prev,
             error: error.response?.data || null,

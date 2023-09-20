@@ -3,6 +3,7 @@ import Link from "next/link";
 import AuthContextProvider from "@/contexts/auth";
 
 import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 export default function Navbar() {
   return (
@@ -17,9 +18,7 @@ export default function Navbar() {
         </Link>
         <AuthContextProvider>
           <SignUp />
-          <button className="px-4 text-xs border border-cyan-700 rounded">
-            Sign In
-          </button>
+          <SignIn />
         </AuthContextProvider>
       </nav>
     </header>

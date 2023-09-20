@@ -30,7 +30,7 @@ export default function SignUp() {
     <>
       <button
         onClick={openModal}
-        className="px-4 text-white text-xs bg-cyan-700 rounded"
+        className="px-4 py-2 text-white text-xs bg-cyan-700 rounded"
       >
         Sign Up
       </button>

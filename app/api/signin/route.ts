@@ -1,18 +1,23 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
 
 import { prisma } from "@/utils/prisma";
+import { AUTH_COOKIE } from "@/utils/constants";
 
-type Body = {
-  email: string;
-  password: string;
+type Error = {
+  email?: string;
+  password?: string;
 };
 
 export async function POST(request: Request) {
-  const { email = "", password = "" }: Body = await request.json();
-  const errors: Partial<Body> = {};
+  const formData = await request.formData();
+  const errors: Error = {};
+
+  const email = formData.get("email")?.toString() || "";
+  const password = formData.get("password")?.toString() || "";
 
   if (!validator.isEmail(email)) {
     errors.email = "Email is invalid!";
@@ -30,7 +35,7 @@ export async function POST(request: Request) {
 
   if (!user) {
     return NextResponse.json(
-      { error: "Please signup first!" },
+      { message: "Please signup first!" },
       { status: 401 }
     );
   }
@@ -39,7 +44,7 @@ export async function POST(request: Request) {
 
   if (!isOwner) {
     return NextResponse.json(
-      { error: "Wrong email and password combination!" },
+      { message: "Wrong email and password combination!" },
       { status: 401 }
     );
   }
@@ -50,5 +55,7 @@ export async function POST(request: Request) {
     .setExpirationTime("24h")
     .sign(secret);
 
-  return NextResponse.json({ token, user });
+  cookies().set(AUTH_COOKIE, token, { maxAge: 6 * 24 * 60 * 60 });
+
+  return NextResponse.json(user);
 }

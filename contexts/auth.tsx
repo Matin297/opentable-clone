@@ -26,7 +26,7 @@ export default function AuthContextProvider({
 }) {
   const [auth, setAuth] = useState<User | null>(null);
 
-  const { getProfile, error, isFailed, isSuccess } = useProfile();
+  const { getProfile, isLoading, isIdle } = useProfile();
 
   useEffect(() => {
     getProfile().then(setAuth);
@@ -34,8 +34,7 @@ export default function AuthContextProvider({
 
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
-      {isFailed && error?.message && <Alert message={error.message} />}
-      {isSuccess ? auth ? <Profile {...auth} /> : children : null}
+      {isLoading || isIdle ? null : auth ? <Profile {...auth} /> : children}
     </AuthContext.Provider>
   );
 }
