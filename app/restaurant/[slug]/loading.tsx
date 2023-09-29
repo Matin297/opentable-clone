@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar";
 import SideMenu from "../components/SideMenu";
 import PhotosPlaceholder from "../components/PhotosPlaceholder";
-import { SECTION_IDs } from "../utils";
+import { SECTION_IDs } from "../utils/constants";
 
 export default function Loading() {
   return (
@@ -60,7 +60,7 @@ export default function Loading() {
             </ul>
           </article>
         </section>
-        <SideMenu />
+        <SideMenu slug="" open_time="" close_time="" />
       </main>
     </main>
   );

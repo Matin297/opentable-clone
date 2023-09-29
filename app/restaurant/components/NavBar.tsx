@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SECTION_IDs } from "../utils";
+import { SECTION_IDs } from "../utils/constants";
 
 export default function NavBar({ className }: { className: string }) {
   return (

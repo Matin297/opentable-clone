@@ -13,7 +13,6 @@ import { User } from "@/utils/prisma";
 
 import Profile from "@/app/components/Profile";
 import useProfile from "@/hooks/useProfile";
-import Alert from "@/components/Alert";
 
 const AuthContext = createContext<
   [User | null, Dispatch<SetStateAction<User | null>>]

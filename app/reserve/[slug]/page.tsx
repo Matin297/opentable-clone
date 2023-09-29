@@ -59,7 +59,7 @@ export default function ReserveRestaurant() {
             </select>
             <input
               className="flex-1 border p-3 rounded"
-              placeholder="Last name"
+              placeholder="Add a special request (optional)"
             />
           </div>
           <div>

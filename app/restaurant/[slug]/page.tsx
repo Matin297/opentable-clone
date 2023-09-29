@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { calcAverageRating } from "@/utils/rating";
 import { prisma } from "@/utils/prisma";
-import { SECTION_IDs } from "../utils";
+import { SECTION_IDs } from "../utils/constants";
 
 import Rating from "@/components/Rating";
 import Photos from "../components/photos";
@@ -19,6 +19,8 @@ const getRestaurant = async (slug: string) => {
       images: true,
       name: true,
       items: true,
+      open_time: true,
+      close_time: true,
       reviews: {
         select: {
           id: true,
@@ -44,6 +46,8 @@ export default async function RestaurantDetails({
     name,
     items: menuItems,
     reviews,
+    open_time,
+    close_time,
   } = await getRestaurant(params.slug);
 
   const rating = calcAverageRating(reviews);
@@ -118,7 +122,11 @@ export default async function RestaurantDetails({
             </article>
           )}
         </section>
-        <SideMenu />
+        <SideMenu
+          slug={params.slug}
+          open_time={open_time}
+          close_time={close_time}
+        />
       </main>
     </main>
   );
