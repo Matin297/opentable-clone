@@ -1,17 +1,7 @@
 import Link from "next/link";
 import ReservationForm from "../components/ReservationForm";
 
-import { prisma } from "@/utils/prisma";
-import { formatTime } from "@/utils/time";
-import { DATE_LOCALE, DATE_FORMAT_OPTIONS } from "@/utils/constants";
-
-async function getRestaurant(slug: string) {
-  const restaurant = await prisma.restaurant.findUnique({ where: { slug } });
-  if (!restaurant) throw new Error("No such restaurant found!");
-  return restaurant;
-}
-
-export default async function ReserveRestaurant({
+export default function Loading({
   params,
   searchParams,
 }: {
@@ -22,29 +12,22 @@ export default async function ReserveRestaurant({
     party: string;
   };
 }) {
-  const { name, images } = await getRestaurant(params.slug);
-
   return (
     <main className="grid grid-rows-[repeat(2, auto)] lg:grid-cols-3 gap-5 max-w-5xl mx-auto p-5">
       <section className="lg:col-span-2">
         <p className="text-lg font-semibold">You’re almost done!</p>
-        <div className="flex gap-4 my-4">
-          <img className="w-16 h-16 rounded-md" src={images[0]} alt={name} />
-          <div className="text-base font-medium">
-            <h2 className="text-2xl font-bold mb-1">{name}</h2>
+        <div className="flex gap-4 my-4 animate-pulse">
+          <div className="w-16 h-16 rounded-md bg-slate-300" />
+          <div>
+            <div className="mb-1 bg-slate-300 w-[200px] h-[35px] rounded" />
             <div className="flex gap-4 flex-wrap">
-              <span>
-                {new Date(searchParams.date).toLocaleDateString(
-                  DATE_LOCALE,
-                  DATE_FORMAT_OPTIONS
-                )}
-              </span>
-              <span>{formatTime(searchParams.time)}</span>
-              <span>{searchParams.party} people (Standard seating)</span>
+              <span className="bg-slate-300 h-[15px] w-[60px] rounded" />
+              <span className="bg-slate-300 h-[15px] w-[60px] rounded" />
+              <span className="bg-slate-300 h-[15px] w-[100px] rounded" />
             </div>
           </div>
         </div>
-        <ReservationForm {...params} {...searchParams} />
+        <ReservationForm {...searchParams} {...params} />
         <p className="mt-4 text-sm font-light">
           By clicking “Complete reservation” you agree to the{" "}
           <Link href="/" className="text-rose-600 hover:underline">

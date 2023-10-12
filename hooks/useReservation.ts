@@ -1,47 +1,60 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getCookie, deleteCookie } from "cookies-next";
+import { Booking } from "@/utils/prisma";
 
-import { User } from "@/utils/prisma";
-import { REQUEST_STATUS, StatusType, AUTH_COOKIE } from "@/utils/constants";
+import { REQUEST_STATUS, StatusType } from "@/utils/constants";
 
 type Error = {
   message?: string;
+  email?: string;
+  phone?: string;
+  first_name?: string;
+  last_name?: string;
 };
 
-type SignupState = {
+type AvailabilityState = {
+  data: Booking | null;
   status: StatusType;
   error: Error | null;
 };
 
-function useProfile() {
-  const [state, setState] = useState<SignupState>({
+export type Params = {
+  slug: string;
+  time: string;
+  date: string;
+  party: string;
+};
+
+function useReservation() {
+  const [state, setState] = useState<AvailabilityState>({
     status: REQUEST_STATUS.idle,
     error: null,
+    data: null,
   });
 
-  const getProfile = useCallback(() => {
+  const reserve = ({ slug, time, date, party }: Params, formData: FormData) => {
     setState((prev) => ({
       ...prev,
       status: REQUEST_STATUS.loading,
     }));
 
     return axios
-      .get("/api/profile", {
-        headers: {
-          Authorization: `bearer ${getCookie(AUTH_COOKIE)}`,
+      .post(`/api/restaurant/${slug}/reserve`, formData, {
+        params: {
+          time,
+          date,
+          party,
         },
       })
       .then(
-        (response: AxiosResponse<User>) => {
+        (response: AxiosResponse<Booking>) => {
           setState((prev) => ({
             ...prev,
             status: REQUEST_STATUS.success,
+            data: response.data,
           }));
-          return response.data;
         },
         (error: AxiosError<Error>) => {
-          deleteCookie(AUTH_COOKIE);
           setState((prev) => ({
             ...prev,
             error: error.response?.data || error || null,
@@ -50,11 +63,11 @@ function useProfile() {
           return Promise.reject(error);
         }
       );
-  }, []);
+  };
 
   return {
     ...state,
-    getProfile,
+    reserve,
     isIdle: state.status === REQUEST_STATUS.idle,
     isLoading: state.status === REQUEST_STATUS.loading,
     isSuccess: state.status === REQUEST_STATUS.success,
@@ -62,4 +75,4 @@ function useProfile() {
   };
 }
 
-export default useProfile;
+export default useReservation;

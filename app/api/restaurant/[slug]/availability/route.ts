@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { prisma } from "@/utils/prisma";
 
-import { TIME } from "@/app/restaurant/utils/constants";
+import { TIME } from "@/utils/constants";
 
 type Errors = {
   party?: string;

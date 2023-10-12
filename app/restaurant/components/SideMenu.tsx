@@ -8,8 +8,9 @@ import Link from "next/link";
 import Alert from "@/components/Alert";
 import Spinner from "@/components/Spinner";
 
-import { PARTY_SIZE, TIME } from "../utils/constants";
-import { formatTime } from "../utils/time";
+import { formatTime } from "@/utils/time";
+import { TIME } from "@/utils/constants";
+import { PARTY_SIZE } from "../utils/constants";
 
 type SideMenuProps = {
   slug: string;
@@ -23,6 +24,7 @@ export default function SideMenu({
   slug,
 }: SideMenuProps) {
   const dateRef = useRef<HTMLInputElement>(null);
+  const partyRef = useRef<HTMLSelectElement>(null);
 
   const { getAvailability, data, error, isLoading, isFailed } =
     useAvailability();
@@ -64,6 +66,7 @@ export default function SideMenu({
             name="sizes"
             id="party"
             className="pt-3 pb-2 border-b w-full"
+            ref={partyRef}
           >
             {PARTY_SIZE.map(({ value, label }) => (
               <option value={value} key={value}>
@@ -125,13 +128,13 @@ export default function SideMenu({
           {isLoading ? <Spinner /> : "Find a time"}
         </button>
       </form>
-      <section className="flex gap-1 flex-wrap mt-4">
+      <section className="flex gap-2 flex-wrap mt-4">
         {data.map(({ time, isAvailable }) => (
           <Link
             key={time}
-            href={`/reserve/${slug}/?date=${dateRef.current?.value}T${time}`}
+            href={`/reserve/${slug}/?date=${dateRef.current?.value}&time=${time}&party=${partyRef.current?.value}`}
             className={cn(
-              "whitespace-nowrap bg-rose-600 text-white p-2 text-sm rounded basis-14",
+              "whitespace-nowrap bg-rose-600 text-white p-2 text-sm rounded basis-[70px] text-center",
               {
                 "bg-slate-300": !isAvailable,
                 "pointer-events-none": !isAvailable,

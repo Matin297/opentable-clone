@@ -36,14 +36,12 @@ function useSignin() {
           ...prev,
           status: REQUEST_STATUS.success,
         }));
-        console.log(response.data);
         setAuth(response.data);
       },
       (error: AxiosError<Error>) => {
-        console.log(error);
         setState((prev) => ({
           ...prev,
-          error: error.response?.data || null,
+          error: error.response?.data || error || null,
           status: REQUEST_STATUS.fail,
         }));
         return Promise.reject(error);

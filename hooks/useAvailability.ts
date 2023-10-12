@@ -60,7 +60,7 @@ function useAvailability() {
         (error: AxiosError<Error>) => {
           setState((prev) => ({
             ...prev,
-            error: error.response?.data || null,
+            error: error.response?.data || error || null,
             status: REQUEST_STATUS.fail,
           }));
           return Promise.reject(error);
