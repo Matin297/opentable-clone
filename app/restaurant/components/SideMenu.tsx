@@ -1,8 +1,10 @@
 "use client";
 
 import { SyntheticEvent, useRef } from "react";
+import axios from "axios";
 import cn from "classnames";
-import useAvailability from "@/hooks/useAvailability";
+
+import useAsync from "@/hooks/useAsync";
 
 import Link from "next/link";
 import Alert from "@/components/Alert";
@@ -18,6 +20,18 @@ type SideMenuProps = {
   close_time: string;
 };
 
+type Error = {
+  message?: string;
+  party?: string;
+  time?: string;
+  date?: string;
+};
+
+type Availability = {
+  isAvailable: boolean;
+  time: string;
+};
+
 export default function SideMenu({
   open_time,
   close_time,
@@ -26,8 +40,10 @@ export default function SideMenu({
   const dateRef = useRef<HTMLInputElement>(null);
   const partyRef = useRef<HTMLSelectElement>(null);
 
-  const { getAvailability, data, error, isLoading, isFailed } =
-    useAvailability();
+  const { run, data, error, isLoading, isFailed } = useAsync<
+    Availability[],
+    Error
+  >({ data: [] });
 
   const openTimeIndex = TIME.findIndex(({ time }) => time === open_time);
   const closeTimeIndex = TIME.findIndex(({ time }) => time === close_time);
@@ -40,12 +56,15 @@ export default function SideMenu({
       date: { value: string };
     };
 
-    getAvailability({
-      slug,
-      party: party.value,
-      time: time.value,
-      date: date.value,
-    });
+    run(
+      axios.get(`/api/restaurant/${slug}/availability`, {
+        params: {
+          time: time.value,
+          date: date.value,
+          party: party.value,
+        },
+      })
+    );
   }
 
   return (
@@ -128,23 +147,25 @@ export default function SideMenu({
           {isLoading ? <Spinner /> : "Find a time"}
         </button>
       </form>
-      <section className="flex gap-2 flex-wrap mt-4">
-        {data.map(({ time, isAvailable }) => (
-          <Link
-            key={time}
-            href={`/reserve/${slug}/?date=${dateRef.current?.value}&time=${time}&party=${partyRef.current?.value}`}
-            className={cn(
-              "whitespace-nowrap bg-rose-600 text-white p-2 text-sm rounded basis-[70px] text-center",
-              {
-                "bg-slate-300": !isAvailable,
-                "pointer-events-none": !isAvailable,
-              }
-            )}
-          >
-            {isAvailable && formatTime(time)}
-          </Link>
-        ))}
-      </section>
+      {data && (
+        <section className="flex gap-2 flex-wrap mt-4">
+          {data.map(({ time, isAvailable }) => (
+            <Link
+              key={time}
+              href={`/reserve/${slug}/?date=${dateRef.current?.value}&time=${time}&party=${partyRef.current?.value}`}
+              className={cn(
+                "whitespace-nowrap bg-rose-600 text-white p-2 text-sm rounded basis-[70px] text-center",
+                {
+                  "bg-slate-300": !isAvailable,
+                  "pointer-events-none": !isAvailable,
+                }
+              )}
+            >
+              {isAvailable && formatTime(time)}
+            </Link>
+          ))}
+        </section>
+      )}
     </aside>
   );
 }
