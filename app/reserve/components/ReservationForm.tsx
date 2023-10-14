@@ -1,18 +1,47 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import useReservation, { Params } from "@/hooks/useReservation";
+import axios from "axios";
+
+import { Booking } from "@/utils/prisma";
+import useAsync from "@/hooks/useAsync";
 
 import Spinner from "@/components/Spinner";
 import Alert from "@/components/Alert";
 
-export default function ReservationForm(props: Params) {
-  const { reserve, error, isLoading, isFailed, isSuccess } = useReservation();
+export type Params = {
+  slug: string;
+  time: string;
+  date: string;
+  party: string;
+};
+
+type Error = {
+  message?: string;
+  email?: string;
+  phone?: string;
+  first_name?: string;
+  last_name?: string;
+};
+
+export default function ReservationForm({ slug, time, date, party }: Params) {
+  const { run, isFailed, isLoading, isSuccess, error } = useAsync<
+    Booking,
+    Error
+  >();
 
   function onSubmitHandler(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    reserve(props, formData);
+    run(
+      axios.post(`/api/restaurant/${slug}/reserve`, formData, {
+        params: {
+          time,
+          date,
+          party,
+        },
+      })
+    );
   }
 
   if (isSuccess)

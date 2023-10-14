@@ -1,18 +1,29 @@
 "use client";
 
 import { useState, ChangeEvent } from "react";
+import axios from "axios";
+
+import { useAuthContext } from "@/contexts/auth";
+import useAsync from "@/hooks/useAsync";
+import { User } from "@/utils/prisma";
+
 import Spinner from "@/components/Spinner";
 import Alert from "@/components/Alert";
-
-import useSignin from "@/hooks/useSignin";
-
 import Dialog from "@/components/Dialog";
 import DialogHeader from "@/components/Dialog/Header";
+
+type Error = {
+  message?: string;
+  password?: string;
+  email?: string;
+};
 
 export default function SignIn() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isLoading, isFailed, error, signin } = useSignin();
+  const [, setAuth] = useAuthContext();
+
+  const { run, isLoading, isFailed, error } = useAsync<User, Error>();
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
@@ -20,10 +31,13 @@ export default function SignIn() {
   async function submitHandler(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    signin(formData).then(() => {
-      event.target.reset();
-      setIsOpen(false);
-    });
+
+    run(axios.post("/api/signin", formData))
+      .then(setAuth)
+      .then(() => {
+        event.target.reset();
+        setIsOpen(false);
+      });
   }
 
   return (

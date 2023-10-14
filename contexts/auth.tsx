@@ -9,10 +9,18 @@ import {
   SetStateAction,
   ReactNode,
 } from "react";
+import axios from "axios";
+import { getCookie, deleteCookie } from "cookies-next";
+
 import { User } from "@/utils/prisma";
+import useAsync from "@/hooks/useAsync";
+import { AUTH_COOKIE } from "@/utils/constants";
 
 import Profile from "@/app/components/Profile";
-import useProfile from "@/hooks/useProfile";
+
+type Error = {
+  message?: string;
+};
 
 const AuthContext = createContext<
   [User | null, Dispatch<SetStateAction<User | null>>]
@@ -25,11 +33,19 @@ export default function AuthContextProvider({
 }) {
   const [auth, setAuth] = useState<User | null>(null);
 
-  const { getProfile, isLoading, isIdle } = useProfile();
+  const { run, isLoading, isIdle } = useAsync<User, Error>();
 
   useEffect(() => {
-    getProfile().then(setAuth);
-  }, [getProfile]);
+    run(
+      axios.get("/api/profile", {
+        headers: {
+          Authorization: `bearer ${getCookie(AUTH_COOKIE)}`,
+        },
+      })
+    )
+      .then(setAuth)
+      .catch(() => deleteCookie(AUTH_COOKIE));
+  }, [run]);
 
   return (
     <AuthContext.Provider value={[auth, setAuth]}>

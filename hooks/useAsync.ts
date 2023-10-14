@@ -15,7 +15,7 @@ const DEFAULT_INIT_STATE = {
   data: null,
 };
 
-function useAsync<D, E>(initialState: Partial<StateType<D, E>>) {
+function useAsync<D, E>(initialState: Partial<StateType<D, E>> = {}) {
   const [state, setState] = useReducer<
     (s: StateType<D, E>, p: Partial<StateType<D, E>>) => StateType<D, E>
   >((prevState, payload) => ({ ...prevState, ...payload }), {
